@@ -4,6 +4,4 @@ __pycache__/
 *.pyc
 *.pyo
 .env
-.license_config.py
-.main.py
-.tool_manager.py
+license_config.py
