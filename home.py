@@ -163,25 +163,6 @@ class HomeScreen:
             anchor="w",
         ).pack(fill="x", pady=(4, 0))
 
-        # Price row
-        price_row = tk.Frame(left, bg=CLR_CARD)
-        price_row.pack(fill="x", pady=(6, 0))
-        tk.Label(
-            price_row,
-            text="Annual Price:",
-            font=("Segoe UI", 9),
-            fg=CLR_SUBTEXT,
-            bg=CLR_CARD,
-        ).pack(side="left")
-        price_var = tk.StringVar(value=f"  Rs. {tool['price_fallback']}")
-        tk.Label(
-            price_row,
-            textvariable=price_var,
-            font=("Segoe UI", 11, "bold"),
-            fg=CLR_GREEN,
-            bg=CLR_CARD,
-        ).pack(side="left")
-
         # ── Right section: status badge + button ─────────────────────────────
         right = tk.Frame(card, bg=CLR_CARD, width=160)
         right.pack(side="right", fill="y", padx=16, pady=14)
@@ -230,7 +211,6 @@ class HomeScreen:
 
         # Store refs
         self._cards[slug] = {
-            "price_var": price_var,
             "status_var": status_var,
             "status_lbl": status_lbl,
             "btn": btn,
@@ -246,22 +226,18 @@ class HomeScreen:
     # ── Data loading ──────────────────────────────────────────────────────────
 
     def _load_all_tool_info(self):
-        """Background thread: fetch price + version info for all tools."""
+        """Background thread: fetch version info for all tools."""
         for tool in TOOLS:
             slug = tool["slug"]
-            # Fetch price
-            price = tm.fetch_price(slug)
             # Fetch latest version info
             info = tm.fetch_latest_info(slug)
-            self.root.after(0, lambda s=slug, p=price, i=info: self._apply_tool_info(s, p, i))
+            self.root.after(0, lambda s=slug, i=info: self._apply_tool_info(s, i))
 
-    def _apply_tool_info(self, slug: str, price: int, info: dict):
+    def _apply_tool_info(self, slug: str, info: dict):
         c = self._cards.get(slug)
         if not c:
             return
         try:
-            if price:
-                c["price_var"].set(f"  Rs. {price}")
             latest = info.get("latest_version", "")
             if latest:
                 installed_ver = tm.get_installed_version(slug)
