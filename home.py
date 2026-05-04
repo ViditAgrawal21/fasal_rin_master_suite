@@ -166,7 +166,6 @@ class HomeScreen:
         # ── Right section: status badge + button ─────────────────────────────
         right = tk.Frame(card, bg=CLR_CARD, width=160)
         right.pack(side="right", fill="y", padx=16, pady=14)
-        right.pack_propagate(False)
 
         # Install status badge
         installed = tm.is_installed(slug, tool["exe_name"])
