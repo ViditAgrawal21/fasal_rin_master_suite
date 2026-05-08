@@ -1,7 +1,5 @@
 # Fasal Rin Automation Suite — Master Launcher
 
-Small launcher EXE (~10-20 MB) that lets users download and open all 4 Fasal Rin automation tools.
-
 ## Tools included
 | Tool | Description |
 |------|-------------|
@@ -17,13 +15,3 @@ Small launcher EXE (~10-20 MB) that lets users download and open all 4 Fasal Rin
 4. User clicks **Open** — tool EXE launched as subprocess
 5. Each tool handles its own subscription/license
 
-## Build
-```
-pip install -r requirements.txt
-python build.py
-```
-Output: `dist/FasalRinSuite.exe`
-
-## Distribution
-Upload `dist/FasalRinSuite.exe` to GitHub Releases on this repo.
-Share the release link with users — they download once and get all future updates via the built-in updater.
